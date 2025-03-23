@@ -3,40 +3,43 @@
 <%- include('../partials/head-end.ejs') %>
 <%- include('../partials/nav.ejs') %>
 
-<section class="container-fluid page-header text-center">
+<section class="container-fluid container my-5 h-80 d-flex flex-column justify-content-center align-items-center">
+  <section class="vw-90 text-center">
     <h2>#continue</h2>
   <p>Login to continue</p>
   </section>
-  
-  <section id="form-details" class="border p-5">
+
+  <section id="form-details" class="border container p-5 w-50">
     <%- include('../partials/notification.ejs') %>
-    
+
     <form action="/auth/login" method="post">
       <div class="text-center">
           <span>Sign In</span>
           <h2>Welcome back!</h2>
       </div>
       <div class="form-group mb-2">
-        <label for="username">Username</label>
-        <input type="text" class="form-control" id="username"
-        pattern="[a-z]+" title="Enter lowercase alphabets only"
-        name="username"
-         placeholder="Enter your username" required>
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email"
+        name="email"
+        placeholder="student@school.edu.ng" required>
       </div>
 
       <div class="form-group mb-2">
         <label for="password">Password</label>
-        <input type="password" class="form-control" 
+        <input type="password" class="form-control"
         name="password"
         pattern="\S.{4,}\S" placeholder="Password should not be less than 6 characters" required>
       </div>
-      <button type="submit" class="btn btn-success mt-2">Sign In</button>
+
+      <div class="d-grid text-center">
+        <button type="submit" class="btn btn-primary mt-2">Sign In</button>
+      </div>
     </form>
-    <p class="mt-2">
+    <p class="mt-2 text-end">
       Don't have an account? <a href="/auth/signup">Sign Up</a>
     </p>
   </section>
-
+</section>
 <%- include('../partials/footer.ejs') %>
 
 <%- include('../partials/end.ejs') %>
