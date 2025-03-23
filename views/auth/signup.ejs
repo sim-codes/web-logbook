@@ -16,6 +16,8 @@
           <h2>Welcome, become a hunter!</h2>
       </div>
 
+      <%- include('../partials/notification.ejs') %>
+
       <div class="form-group mb-2">
         <label for="email">Email</label>
         <input type="email" class="form-control" id="email"
@@ -29,8 +31,8 @@
       </div>
 
       <div class="form-group mb-2">
-        <label for="brand">Account Type?</label>
-        <select name="brand" id="" class="form-select">
+        <label for="role">Account Type?</label>
+        <select name="role" id="" class="form-select">
             <option value="student">Student</option>
             <option value="lecturer">Lecturer</option>
         </select>

@@ -9,6 +9,8 @@
   <p>Login to continue</p>
   </section>
 
+  <%- include('../partials/notification.ejs') %>
+
   <section id="form-details" class="border container p-5 w-50">
     <%- include('../partials/notification.ejs') %>
 
@@ -18,9 +20,9 @@
           <h2>Welcome back!</h2>
       </div>
       <div class="form-group mb-2">
-        <label for="email">Email</label>
-        <input type="email" class="form-control" id="email"
-        name="email"
+        <label for="username">Email</label>
+        <input type="email" class="form-control" id="username"
+        name="username"
         placeholder="student@school.edu.ng" required>
       </div>
 
