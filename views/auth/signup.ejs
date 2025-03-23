@@ -1,0 +1,39 @@
+<%- include('../partials/start.ejs') %>
+<link rel="stylesheet" href="/css/auth.css">
+<%- include('../partials/head-end.ejs') %>
+<%- include('../partials/nav.ejs') %>
+
+<section class="container-fluid page-header text-center">
+    <h2>#newhunter</h2>
+  <p>You will like it here.</p>
+  </section>
+  
+  <section id="form-details" class="border p-5">
+    <form action="/auth/register" method="post">
+      <div class="text-center">
+          <span>Sign Up</span>
+          <h2>Welcome, become a hunter!</h2>
+      </div>
+
+      <div class="form-group mb-2">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email"
+        name="email"
+        placeholder="Enter your email" required>
+      </div>
+
+      <div class="form-group mb-2">
+        <label for="password">Password</label>
+        <input type="password" name="password" class="form-control" pattern="\S.{4,}\S" placeholder="Password should not be less than 6 characters" required>
+      </div>
+
+      <button type="submit" class="btn btn-success mt-2">Sign Up</button>
+    </form>
+    <p class="mt-2">
+      Already have an account? <a href="/auth/signin">Sign In</a>
+    </p>
+  </section>
+
+<%- include('../partials/footer.ejs') %>
+
+<%- include('../partials/end.ejs') %>

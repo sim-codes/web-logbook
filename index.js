@@ -3,9 +3,12 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const session = require('express-session');
 const staticPagesRoutes = require('./routes/static');
+const connectDB = require('./db')
+const authRoutes = require('./routes/auth');
 
 const app = express();
 const PORT = 5000;
+connectDB();
 
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
@@ -37,6 +40,7 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
 app.use('', staticPagesRoutes);
+app.use("/auth", authRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
