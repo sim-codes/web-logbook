@@ -2,49 +2,11 @@
 <%- include('./partials/head-end.ejs') %>
 
     <%- include('./partials/nav.ejs') %>
-
-        <!-- button prev and next -->
-        <div class="buttons">
-            <button id="prev">Prev</button>
-            <button id="next">Next</button>
-        </div>
-
-        <!-- dots -->
-        <ul class="dots">
-            <li class="active"></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-        </ul>
-      </div>
-
-      <section id="feature" class="container p-5">
-        <div class="row text-center">
-            <div class="col fe-box">
-                <i class="fa-solid fa-store"></i>
-                <h6 class="text-orange">Free Shipping</h6>
-            </div>
-            <div class="col fe-box">
-                <i class="fa-solid fa-house-laptop"></i>
-                <h6>Online Order</h6>
-            </div>
-            <div class="col fe-box">
-                <i class="fa-solid fa-user-shield"></i>
-                <h6>Secured Transaction</h6>
-            </div>
-            <div class="col fe-box">
-                <i class="fa-solid fa-piggy-bank"></i>
-                <h6>Save Money</h6>
-            </div>
-            <div class="col fe-box">
-                <i class="fa-solid fa-headset"></i>
-                <h6>24/7 Support</h6>
-            </div>
-        </div>
-      </section>
+    <section id="feature" class="container p-5">
+        <%- include('../partials/notification.ejs') %>
+        <div class="display-1">Welcome to homepage</div>
+    </section>
 
 
     <%- include('./partials/footer.ejs') %>
-    <!-- <script src="/js/slider.js"></script> -->
     <%- include('./partials/end.ejs') %>

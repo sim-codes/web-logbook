@@ -5,7 +5,7 @@ const logbookSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    description: {
+    work: {
         type: String,
         required: true
     },
