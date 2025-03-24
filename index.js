@@ -2,9 +2,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const session = require('express-session');
+const expressLayouts = require('express-ejs-layouts');
 const staticPagesRoutes = require('./routes/static');
 const connectDB = require('./db')
 const authRoutes = require('./routes/auth');
+const dashboardRoutes = require('./routes/dashboard');
 
 const app = express();
 const PORT = 5000;
@@ -35,12 +37,16 @@ app.use(passport.session());
 
 // set template engine
 app.set('view engine', 'ejs');
+app.use(expressLayouts);
+
+app.set('layout', 'layout');
 
 //define static folder
 app.use(express.static('public'));
 
 app.use('', staticPagesRoutes);
 app.use("/auth", authRoutes);
+app.use("/dashboard", dashboardRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

@@ -1,8 +1,3 @@
-<%- include('../partials/start.ejs') %>
-<!-- <link rel="stylesheet" href="/css/auth.css"> -->
-<%- include('../partials/head-end.ejs') %>
-<%- include('../partials/nav.ejs') %>
-
 <section class="container-fluid container my-5 h-80 d-flex flex-column justify-content-center align-items-center">
   <section class="vw-90 text-center">
     <h2>#continue</h2>
@@ -12,7 +7,6 @@
   <%- include('../partials/notification.ejs') %>
 
   <section id="form-details" class="border container p-5 w-50">
-    <%- include('../partials/notification.ejs') %>
 
     <form action="/auth/login" method="post">
       <div class="text-center">
@@ -42,6 +36,3 @@
     </p>
   </section>
 </section>
-<%- include('../partials/footer.ejs') %>
-
-<%- include('../partials/end.ejs') %>
