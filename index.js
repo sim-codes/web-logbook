@@ -29,10 +29,7 @@ app.use((req, res, next) => {
     next();
 })
 
-// initialize passport
 app.use(passport.initialize());
-
-// passport session
 app.use(passport.session());
 
 // set template engine

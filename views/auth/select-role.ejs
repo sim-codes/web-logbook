@@ -1,0 +1,60 @@
+<section class="container my-5">
+    <div class="text-center mb-4">
+      <h2>Select Your Account Type</h2>
+      <p>Choose the role that best describes you</p>
+    </section>
+  
+    <%- include('../partials/notification.ejs') %>
+  
+    <div class="row justify-content-center">
+      <div class="col-md-10">
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <div class="card h-100 text-center">
+              <div class="card-body">
+                <h5 class="card-title">Student</h5>
+                <p class="card-text">For students tracking industrial training</p>
+                <a href="/auth/signup/student" class="btn btn-primary">Create Student Account</a>
+              </div>
+            </div>
+          </div>
+  
+          <div class="col-md-4 mb-3">
+            <div class="card h-100 text-center">
+              <div class="card-body">
+                <h5 class="card-title">Lecturer</h5>
+                <p class="card-text">For academic staff supervising students</p>
+                <a href="/auth/signup/lecturer" class="btn btn-primary">Create Lecturer Account</a>
+              </div>
+            </div>
+          </div>
+  
+          <div class="col-md-4 mb-3">
+            <div class="card h-100 text-center">
+              <div class="card-body">
+                <h5 class="card-title">Institution</h5>
+                <p class="card-text">For institutional administrators</p>
+                <a href="/auth/signup/institution" class="btn btn-primary">Create Institution Account</a>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="row justify-content-center mt-3">
+          <div class="col-md-4 mb-3">
+            <div class="card h-100 text-center">
+              <div class="card-body">
+                <h5 class="card-title">ITF Representative</h5>
+                <p class="card-text">For Industrial Training Fund representatives</p>
+                <a href="/auth/signup/itf" class="btn btn-primary">Create ITF Account</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="text-center mt-4">
+      <p>Already have an account? <a href="/auth/signin">Sign In</a></p>
+    </div>
+  </section>
