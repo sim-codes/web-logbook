@@ -2,54 +2,96 @@
 <html lang="en">
 <head>
     <title><%= title %></title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- <link rel="stylesheet" href="/css/dashboard.css"> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
 </head>
 <body>
   <%- include('./partials/nav.ejs') %>
   <div class="container-fluid">
     <div class="row">
       <% if (typeof user != 'undefined') { %>
-      <!-- Sidebar -->
-      <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+      <!-- Improved Sidebar -->
+      <nav class="col-md-3 col-lg-2 d-md-block sidebar">
         <div class="position-sticky pt-3">
-          <ul class="nav flex-column">
-            <li class="nav-item">
-              <a class="nav-link" href="/profile">
-                <i class="bi bi-person"></i>
-                Profile
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/profile/bank">
-                <i class="bi bi-bank"></i>
-                Bank Details
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/logbooks/new">
-                <i class="bi bi-plus-circle"></i>
-                Add Log
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/dashboard">
-                <i class="bi bi-journal-text"></i>
-                Work Logs
-              </a>
-            </li>
-          </ul>
+            <div class="sidebar-header d-flex align-items-center">
+                <img src="/path/to/avatar.png" class="user-avatar me-2" alt="User avatar">
+                <div>
+                    <h6 class="mb-0"><%= user.name %></h6>
+                    <small class="text-muted"><%= user.role.toUpperCase() %></small>
+                </div>
+            </div>
+    
+            <ul class="nav flex-column mt-3">
+                <li class="nav-item">
+                    <a class="nav-link" href="/profile">
+                        <i class="fas fa-user me-2"></i>
+                        Profile
+                    </a>
+                </li>
+                
+                <% if (user.role === 'student') { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile/bank">
+                            <i class="fas fa-university me-2"></i>
+                            Bank Details
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logbooks/new">
+                            <i class="fas fa-plus-circle me-2"></i>
+                            Add Log
+                        </a>
+                    </li>
+                <% } %>
+    
+                <li class="nav-item">
+                    <a class="nav-link" href="/dashboard">
+                        <i class="fas fa-clipboard-list me-2"></i>
+                        Work Logs
+                        <% if (user.role !== 'student') { %>
+                            <span class="badge bg-info ms-2">View Only</span>
+                        <% } %>
+                    </a>
+                </li>
+    
+                <% if (user.role === 'student') { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logbooks/manage">
+                            <i class="fas fa-edit me-2"></i>
+                            Manage Logs
+                        </a>
+                    </li>
+                <% } %>
+    
+                <li class="nav-item">
+                    <a class="nav-link text-danger" href="/logout">
+                        <i class="fas fa-sign-out-alt me-2"></i>
+                        Logout
+                    </a>
+                </li>
+            </ul>
         </div>
-      </nav>
+    </nav>
       <% } %>
       <!-- Main Content -->
-      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <main class="<%= typeof user !== 'undefined' ? 'col-md-9 ms-sm-auto col-lg-10' : 'col-12' %> px-md-4 pt-3">
         <%- body %>
       </main>
     </div>
   </div>
   <%- include('./partials/footer.ejs') %>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Set active class based on current URL
+        const currentPath = window.location.pathname;
+        document.querySelectorAll('.nav-link').forEach(link => {
+            if (link.getAttribute('href') === currentPath) {
+                link.classList.add('active');
+            }
+        });
+    });
+    </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -1,29 +1,37 @@
-<nav class="container-fluid px-3 navbar navbar-expand-lg navbar-dark bg-black">
-  <div class="container-fluid">
-    <a class="navbar-brand display-1" href="/">eBooklog</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="/">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/auth/signin">Login</a>
-        </li>
-        <!-- <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary py-3">
+  <div class="container">
+      <a class="navbar-brand fw-bold fs-3" href="/">SIWES Tracker</a>
+      
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+              data-bs-target="#mainNav" aria-controls="mainNav" 
+              aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="mainNav">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="/">Home</a>
+              </li>
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" 
+                     data-bs-toggle="dropdown" aria-expanded="false">
+                      Login
+                  </a>
+                  <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="/auth/student/login">Student</a></li>
+                      <li><a class="dropdown-item" href="/auth/institution/login">Institution</a></li>
+                      <li><a class="dropdown-item" href="/auth/itf/login">ITF</a></li>
+                  </ul>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="/about">About</a>
+              </li>
           </ul>
-        </li> -->
-      </ul>
-    </div>
+          
+          <div class="d-flex">
+              <a href="/register" class="btn btn-light px-4">Get Started</a>
+          </div>
+      </div>
   </div>
 </nav>

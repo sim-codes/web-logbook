@@ -1,12 +1,81 @@
-<%- include('./partials/start.ejs') %>
-<%- include('./partials/head-end.ejs') %>
+<section id="hero" class="bg-primary text-white py-5">
+    <div class="container text-center">
+        <h1 class="display-4 mb-4">Welcome to SIWES Tracker</h1>
+        <p class="lead mb-4">Streamline your industrial training experience with our comprehensive platform</p>
+        <div class="d-grid gap-3 d-md-block">
+            <a href="/register/student" class="btn btn-light btn-lg px-5 me-md-3">Get Started as Student</a>
+            <a href="/register/supervisor" class="btn btn-success btn-lg px-5">Supervisor Portal</a>
+        </div>
+    </div>
+</section>
 
-    <%- include('./partials/nav.ejs') %>
-    <section id="feature" class="container p-5">
+<section id="features" class="py-5">
+    <div class="container">
         <%- include('./partials/notification.ejs') %>
-        <div class="display-1">Welcome to homepage</div>
-    </section>
+        <div class="row text-center mb-5">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <i class="bi bi-person-plus fs-1 text-primary"></i>
+                        <h3 class="card-title">Student Registration</h3>
+                        <p class="card-text">Create your account and start documenting your industrial training experience</p>
+                        <a href="/register/student" class="btn btn-outline-primary">Sign Up Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <i class="bi bi-journal-text fs-1 text-success"></i>
+                        <h3 class="card-title">Work Log Management</h3>
+                        <p class="card-text">Easily input and manage your daily work logs with our intuitive interface</p>
+                        <a href="/login" class="btn btn-outline-success">View Logs</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <i class="bi bi-building fs-1 text-info"></i>
+                        <h3 class="card-title">Institution Portal</h3>
+                        <p class="card-text">For institutions and ITF officials to monitor student progress</p>
+                        <a href="/register/institution" class="btn btn-outline-info">Organization Signup</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <div class="row mt-5">
+            <div class="col-md-6">
+                <h2>About SIWES Tracker</h2>
+                <p class="lead">Our platform provides seamless integration between students, institutions, and industrial training supervisors.</p>
+                <ul class="list-unstyled">
+                    <li class="mb-3"><i class="bi bi-check2-circle me-2 text-success"></i>Real-time progress tracking</li>
+                    <li class="mb-3"><i class="bi bi-check2-circle me-2 text-success"></i>Secure document management</li>
+                    <li class="mb-3"><i class="bi bi-check2-circle me-2 text-success"></i>Automated reporting system</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <div class="card bg-light">
+                    <div class="card-body">
+                        <h3 class="card-title mb-4">Quick Links</h3>
+                        <div class="list-group">
+                            <a href="/login" class="list-group-item list-group-item-action">Student Login</a>
+                            <a href="/login" class="list-group-item list-group-item-action">Institution Login</a>
+                            <a href="/faq" class="list-group-item list-group-item-action">FAQ</a>
+                            <a href="/contact" class="list-group-item list-group-item-action">Contact Support</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-    <%- include('./partials/footer.ejs') %>
-    <%- include('./partials/end.ejs') %>
+<section class="bg-light py-5">
+    <div class="container text-center">
+        <h2 class="mb-4">Start Your Journey Today</h2>
+        <p class="lead mb-4">Join thousands of students and institutions managing their SIWES programs efficiently</p>
+        <a href="/register" class="btn btn-primary btn-lg px-5">Register Now</a>
+    </div>
+</section>

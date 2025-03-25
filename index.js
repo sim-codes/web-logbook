@@ -1,5 +1,4 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const passport = require('passport');
 const session = require('express-session');
 const expressLayouts = require('express-ejs-layouts');
@@ -11,6 +10,7 @@ const dashboardRoutes = require('./routes/dashboard');
 const app = express();
 const PORT = 5000;
 connectDB();
+
 
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
