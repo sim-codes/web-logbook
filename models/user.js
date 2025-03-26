@@ -21,8 +21,10 @@ const BaseUserSchema = new mongoose.Schema({
 
 // Plugin for authentication
 BaseUserSchema.plugin(passportLocalMongoose, {
-    usernameField: 'email'
+    usernameField: 'email',
+    usernameUnique: false
 });
+
 
 // Student-specific fields
 const StudentSchema = new mongoose.Schema({
@@ -37,7 +39,7 @@ const StudentSchema = new mongoose.Schema({
     },
     logs: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Log'
+        ref: 'Logbook'
     }]
 });
 

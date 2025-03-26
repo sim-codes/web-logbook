@@ -27,37 +27,37 @@ const register = async (req, res) => {
         let newUser;
         switch(role) {
             case 'student':
-                newUser = new Student({ 
-                    email, 
-                    role, 
-                    ...additionalDetails 
+                newUser = new Student({
+                    email,
+                    role,
+                    ...additionalDetails
                 });
                 break;
             case 'lecturer':
-                newUser = new Lecturer({ 
-                    email, 
-                    role, 
-                    ...additionalDetails 
+                newUser = new Lecturer({
+                    email,
+                    role,
+                    ...additionalDetails
                 });
                 break;
             case 'institution':
-                newUser = new Institution({ 
-                    email, 
-                    role, 
-                    ...additionalDetails 
+                newUser = new Institution({
+                    email,
+                    role,
+                    ...additionalDetails
                 });
                 break;
             case 'itf':
-                newUser = new ITF({ 
-                    email, 
-                    role, 
-                    ...additionalDetails 
+                newUser = new ITF({
+                    email,
+                    role,
+                    ...additionalDetails
                 });
                 break;
             case 'admin':
-                newUser = new User({ 
-                    email, 
-                    role 
+                newUser = new User({
+                    email,
+                    role
                 });
                 break;
             default:
@@ -66,7 +66,7 @@ const register = async (req, res) => {
 
         // Register the user
         await User.register(newUser, password);
-        
+
         req.session.message = {
             type: 'success',
             message: 'Account created successfully!'
@@ -78,7 +78,7 @@ const register = async (req, res) => {
             type: 'danger',
             message: 'Account creation failed. Try again!'
         };
-        res.redirect('/auth/signup');
+        res.redirect('/auth/signup/select-role');
     }
 }
 
@@ -131,6 +131,13 @@ const logout = (req, res) => {
     });
 }
 
+const signOut = (req, res) => {
+    res.render('auth/signout', {
+        title: 'eBooklog - Sign Out Confirmation',
+        user: req.user
+    });
+}
+
 const signin = (req, res) => {
     res.render('auth/signin', {
         title: 'eBooklog - Sign In',
@@ -145,4 +152,4 @@ const signup = (req, res) => {
     });
 }
 
-module.exports = { signin, signup, loginUser, register, logout };
+module.exports = { signin, signup, loginUser, register, logout, signOut };

@@ -6,6 +6,7 @@ const staticPagesRoutes = require('./routes/static');
 const connectDB = require('./db')
 const authRoutes = require('./routes/auth');
 const dashboardRoutes = require('./routes/dashboard');
+const itfRoutes = require('./routes/itf')
 
 const app = express();
 const PORT = 5000;
@@ -44,6 +45,7 @@ app.use(express.static('public'));
 app.use('', staticPagesRoutes);
 app.use("/auth", authRoutes);
 app.use("/dashboard", dashboardRoutes);
+app.use("/itf", itfRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

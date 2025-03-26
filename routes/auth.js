@@ -1,23 +1,23 @@
 const express = require('express');
 const router = express.Router();
-const { 
-    signin, 
-    signup, 
-    loginUser, 
-    register, 
-    logout 
+const isAuthenticated = require('../middlewares/auth');
+const {
+    signin,
+    signup,
+    loginUser,
+    register,
+    logout,
+    signOut
 } = require('../controllers/auth');
 const { getApprovedInstitutions } = require('../controllers/institution');
 
 // Authentication routes
 router.get('/signin', signin);
-
-// Role selection route
 router.get('/signup/select-role', signup);
 
 // Specific signup routes with institution fetching
 router.get('/signup/student', getApprovedInstitutions, (req, res) => {
-    res.render('auth/signup-student', { 
+    res.render('auth/signup-student', {
         title: 'eBooklog - Student Signup',
         user: req.user,
         institutions: req.institutions || []
@@ -40,14 +40,15 @@ router.get('/signup/institution', (req, res) => {
 });
 
 router.get('/signup/itf', (req, res) => {
-    res.render('auth/signup-itf', { 
+    res.render('auth/signup-itf', {
         title: 'eBooklog - ITF Signup',
-        user: req.user 
+        user: req.user
     });
 });
 
 router.post('/login', loginUser);
-router.get('/logout', logout);
+router.get('/logout', isAuthenticated, signOut);
+router.post('/logout', isAuthenticated, logout);
 router.post('/register', register);
 
 module.exports = router;

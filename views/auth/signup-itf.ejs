@@ -1,0 +1,85 @@
+<section class="container my-5">
+    <div class="text-center mb-4">
+        <h2>ITF Representative Registration</h2>
+        <p>Create your Industrial Training Fund account</p>
+    </section>
+
+    <%- include('../partials/notification.ejs') %>
+
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <form action="/auth/register" method="post">
+                <input type="hidden" name="role" value="itf">
+                
+                <div class="form-group mb-3">
+                    <label for="email">Official Email</label>
+                    <input type="email" class="form-control" id="email" 
+                        name="email"
+                        placeholder="representative@itf.gov.ng" 
+                        required>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="region">Region</label>
+                    <select class="form-control" id="region" 
+                            name="region" 
+                            required>
+                    <option value="">Select Your Region</option>
+                    <option value="North Central">North Central</option>
+                    <option value="North East">North East</option>
+                    <option value="North West">North West</option>
+                    <option value="South Central">South South</option>
+                    <option value="South East">South East</option>
+                    <option value="South West">South West</option>
+                    </select>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="officeAddress">Office Address</label>
+                    <input type="text" class="form-control" id="officeAddress" 
+                        name="officeAddress" 
+                        placeholder="Full office address" 
+                        required>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" 
+                        name="password" 
+                        minlength="6" 
+                        placeholder="Create a password (minimum 6 characters)" 
+                        required>
+                </div>
+        
+                <div class="form-group mb-3">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" class="form-control" 
+                        id="confirmPassword" 
+                        minlength="6" 
+                        placeholder="Repeat your password" 
+                        required>
+                </div>
+        
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">Create ITF Account</button>
+                </div>
+                </form>
+        
+                <div class="text-center mt-3">
+                <p>Already have an account? <a href="/auth/signin">Sign In</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+  
+  <script>
+  document.querySelector('form').addEventListener('submit', function(event) {
+    const password = this.querySelector('input[name="password"]').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+  
+    if (password !== confirmPassword) {
+      event.preventDefault();
+      alert('Passwords do not match');
+    }
+  });
+  </script>

@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const logbookSchema = new mongoose.Schema({
     day: {
-        type: String,
+        type: Date,
         required: true
     },
     work: {
@@ -10,17 +10,15 @@ const logbookSchema = new mongoose.Schema({
         required: true
     },
     images: {
-        type: Array
+        type: [String]
     },
     student: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true,
-    }},
-    {
-        timestamps: true
+        ref: 'Student',
+        required: true
     }
-);
-
+    }, {
+    timestamps: true
+});
 
 module.exports = mongoose.model('Logbook', logbookSchema);
