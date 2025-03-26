@@ -6,7 +6,7 @@ const upload = require('../multer');
 const dashboard = async (req, res) => {
     try {
         const page = parseInt(req.query.page) || 1;
-        const limit = 1;
+        const limit = 5;
         const skip = (page - 1) * limit;
 
         // Determine query based on user role
