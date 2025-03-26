@@ -1,0 +1,29 @@
+<!-- views/logbooks/new.ejs -->
+<section class="pt-3">
+    <div class="d-flex justify-content-between mb-4">
+      <h2>New Work Log</h2>
+      <a href="/dashboard" class="btn btn-secondary">
+        <i class="fas fa-arrow-left"></i> Back to Dashboard
+      </a>
+    </div>
+  
+    <form action="/dashboard/logbooks" method="POST" enctype="multipart/form-data">
+      <div class="mb-3">
+        <label for="day" class="form-label">Date</label>
+        <input type="date" class="form-control" id="day" name="day" required>
+      </div>
+      
+      <div class="mb-3">
+        <label for="work" class="form-label">Work Description</label>
+        <textarea class="form-control" id="work" name="work" rows="5" required></textarea>
+      </div>
+      
+      <div class="mb-3">
+        <label for="images" class="form-label">Upload Images</label>
+        <input type="file" class="form-control" id="images" name="images" multiple accept="image/*">
+        <div class="form-text">You can upload multiple images</div>
+      </div>
+      
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</section>

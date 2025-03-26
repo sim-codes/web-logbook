@@ -1,20 +1,14 @@
 <section class="pt-3">
-  <% 
-    // Group logs by week number
+  <%
     const weeks = {};
-    // Helper to calculate ISO week number
     function getWeekNumber(d) {
-      // Copy date to avoid modifying the original
-      d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
-      // Set to nearest Thursday: current date + 4 - current day number (with Sunday as 7)
       const dayNum = d.getUTCDay() || 7;
       d.setUTCDate(d.getUTCDate() + 4 - dayNum);
-      // Calculate week number: number of days since the first day of the year
       const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
       const weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
       return weekNo;
     }
-    
+
     logs.forEach(log => {
       const date = new Date(log.day);
       const week = getWeekNumber(date);
@@ -23,14 +17,14 @@
       }
       weeks[week].push(log);
     });
-    
+
     const sortedWeekNumbers = Object.keys(weeks).sort((a, b) => a - b);
   %>
 
   <% if (user.role === 'student') { %>
     <div class="d-flex justify-content-between mb-4">
       <h2>My Logs</h2>
-      <a href="/logbooks/new" class="btn btn-primary">
+      <a href="/dashboard/logbooks/new" class="btn btn-primary">
         <i class="fas fa-plus"></i> New Log
       </a>
     </div>
@@ -59,9 +53,9 @@
             <% } %>
             <% if (user.role === 'student') { %>
               <div class="btn-group mt-2">
-                <a href="/logbooks/<%= log._id %>/edit" class="btn btn-sm btn-warning">Edit</a>
-                <form action="/logbooks/<%= log._id %>/delete" method="POST" class="d-inline">
-                  <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                <a href="/dashboard/logbooks/<%= log._id %>/edit" class="btn btn-sm btn-warning m-2">Edit</a>
+                <form action="/dashboard/logbooks/<%= log._id %>/delete" method="POST" class="d-inline">
+                  <button type="submit" class="btn btn-sm btn-danger m-2">Delete</button>
                 </form>
               </div>
             <% } else { %>
@@ -92,7 +86,7 @@
         <% } %>
 
         <% for(let i = 1; i <= totalPages; i++) { %>
-          <li class="page-item <%= currentPage === i ? 'active' : '' %>">
+          <li class="page-item mx-2 <%= currentPage === i ? 'active' : '' %>">
             <a class="page-link" href="/dashboard?page=<%= i %>"><%= i %></a>
           </li>
         <% } %>

@@ -1,0 +1,37 @@
+<!-- views/logbooks/edit.ejs -->
+<section class="pt-3">
+    <div class="d-flex justify-content-between mb-4">
+      <h2>Edit Work Log</h2>
+      <a href="/dashboard" class="btn btn-secondary">
+        <i class="fas fa-arrow-left"></i> Back to Dashboard
+      </a>
+    </div>
+  
+    <form action="/dashboard/logbooks/<%= log._id %>/update" method="POST" enctype="multipart/form-data">
+      <div class="mb-3">
+        <label for="day" class="form-label">Date</label>
+        <input type="date" class="form-control" id="day" name="day" 
+               value="<%= new Date(log.day).toISOString().split('T')[0] %>" required>
+      </div>
+      
+      <div class="mb-3">
+        <label for="work" class="form-label">Work Description</label>
+        <textarea class="form-control" id="work" name="work" rows="5" required><%= log.work %></textarea>
+      </div>
+      
+      <div class="mb-3">
+        <label class="form-label">Existing Images</label>
+        <div class="mb-2">
+          <% log.images.forEach(image => { %>
+            <img src="/uploads/<%= image %>" alt="Log image" class="img-thumbnail me-2" style="width: 80px;">
+          <% }) %>
+        </div>
+        
+        <label for="images" class="form-label">Add New Images</label>
+        <input type="file" class="form-control" id="images" name="images" multiple accept="image/*">
+        <div class="form-text">Select additional images to upload</div>
+      </div>
+      
+      <button type="submit" class="btn btn-primary">Update Log</button>
+    </form>
+  </section>
