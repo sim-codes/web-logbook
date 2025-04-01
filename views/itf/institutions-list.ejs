@@ -5,7 +5,7 @@
 
             <% if (institutions.length === 0) { %>
                 <div class="alert alert-info" role="alert">
-                    No institutions are currently awaiting approval.
+                    No institution exist in the database.
                 </div>
             <% } else { %>
                 <div class="table-responsive">
@@ -25,16 +25,10 @@
                                     <td><%= institution.address %></td>
                                     <td><%= institution.email %></td>
                                     <td>
-                                        <form action="/itf/approve-institution" method="post" class="d-inline me-2">
-                                            <input type="hidden" name="institutionId" value="<%= institution._id %>">
-                                            <button type="submit" class="btn btn-success btn-sm">
-                                                <i class="fas fa-check me-1"></i>Approve
-                                            </button>
-                                        </form>
                                         <form action="/itf/reject-institution" method="post" class="d-inline">
                                             <input type="hidden" name="institutionId" value="<%= institution._id %>">
                                             <button type="submit" class="btn btn-danger btn-sm">
-                                                <i class="fas fa-times me-1"></i>Reject
+                                                <i class="fas fa-trash me-1"></i>Delete
                                             </button>
                                         </form>
                                     </td>

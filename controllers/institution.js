@@ -2,7 +2,7 @@ const { Institution } = require('../models/user');
 
 const getApprovedInstitutions = async (req, res, next) => {
     try {
-        const institutions = await Institution.find({ approved: true }, 'name _id');
+        const institutions = await Institution.find({ approved: true });
         req.institutions = institutions;
         next();
     } catch (err) {
@@ -34,7 +34,7 @@ const getUnapprovedInstitutions = async (req, res) => {
 const approveInstitution = async (req, res) => {
     try {
         const { institutionId } = req.body;
-        
+
         const institution = await Institution.findByIdAndUpdate(
             institutionId, 
             { approved: true }, 

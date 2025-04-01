@@ -3,6 +3,7 @@ const passportLocalMongoose = require('passport-local-mongoose');
 
 // Base User Schema
 const BaseUserSchema = new mongoose.Schema({
+    name: String,
     email: {
         type: String,
         unique: true,
@@ -58,7 +59,6 @@ const LecturerSchema = new mongoose.Schema({
 
 // Institution-specific fields
 const InstitutionSchema = new mongoose.Schema({
-    name: String,
     address: String,
     approved: {
         type: Boolean,

@@ -10,21 +10,29 @@
     <div class="col-md-6">
       <form action="/auth/register" method="post">
         <input type="hidden" name="role" value="lecturer">
-        
+
+        <div class="form-group mb-3">
+          <label for="name">Your Fullname</label>
+          <input type="text" class="form-control" id="name"
+          name="name"
+          placeholder="Full name of Lecturer"
+          required>
+        </div>
+
         <div class="form-group mb-3">
           <label for="email">Institutional Email</label>
-          <input type="email" class="form-control" id="email" 
-                 name="email" 
-                 placeholder="lecturer@school.edu.ng" 
-                 required>
+          <input type="email" class="form-control" id="email"
+            name="email"
+            placeholder="lecturer@school.edu.ng"
+            required>
         </div>
 
         <div class="form-group mb-3">
           <label for="staffId">Staff ID</label>
-          <input type="text" class="form-control" id="staffId" 
-                 name="staffId" 
-                 placeholder="Enter your staff ID" 
-                 required>
+          <input type="text" class="form-control" id="staffId"
+            name="staffId"
+            placeholder="Enter your staff ID"
+            required>
         </div>
 
         <div class="form-group mb-3">

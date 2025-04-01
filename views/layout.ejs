@@ -32,6 +32,12 @@
 
                 <% if (user.role === 'itf') { %>
                     <li class="nav-item">
+                        <a class="nav-link" href="/itf/institutions">
+                            <i class="fas fa-building me-2"></i>
+                            Institutions
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="/itf/approve-institutions">
                             <i class="fas fa-building me-2"></i>
                             Approve Institutions
@@ -53,7 +59,7 @@
                         </a>
                     </li>
                 <% } %>
-    
+
                 <li class="nav-item">
                     <a class="nav-link" href="/dashboard">
                         <i class="fas fa-clipboard-list me-2"></i>
@@ -63,18 +69,8 @@
                         <% } %>
                     </a>
                 </li>
-    
-                <% if (user.role === 'student') { %>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/logbooks/manage">
-                            <i class="fas fa-edit me-2"></i>
-                            Manage Logs
-                        </a>
-                    </li>
-                <% } %>
-    
                 <li class="nav-item">
-                    <a class="nav-link text-danger" href="auth/logout">
+                    <a class="nav-link text-danger" href="/auth/logout">
                         <i class="fas fa-sign-out-alt me-2"></i>
                         Logout
                     </a>

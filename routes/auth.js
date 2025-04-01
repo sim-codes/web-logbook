@@ -25,7 +25,7 @@ router.get('/signup/student', getApprovedInstitutions, (req, res) => {
 });
 
 router.get('/signup/lecturer', getApprovedInstitutions, (req, res) => {
-    res.render('auth/signup-lecturer', { 
+    res.render('auth/signup-lecturer', {
         title: 'eBooklog - Lecturer Signup',
         user: req.user,
         institutions: req.institutions || []
