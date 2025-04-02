@@ -2,6 +2,7 @@
 const Logbook = require('../models/logbook');
 const mongoose = require('mongoose');
 const upload = require('../multer');
+const { Institution, Student } = require('../models/user');
 
 const dashboard = async (req, res) => {
     try {
@@ -16,6 +17,7 @@ const dashboard = async (req, res) => {
         const logs = await Logbook.find(queryCondition)
             .limit(limit)
             .skip(skip)
+            .populate('student', 'name')
             .sort({ day: -1 });
 
         res.render('dashboard', {
@@ -72,7 +74,7 @@ const getEditLog = async (req, res) => {
             _id: req.params.id,
             student: req.user._id
         });
-        
+
         if (!log) {
             req.session.message = {
                 type: 'danger',
@@ -80,7 +82,7 @@ const getEditLog = async (req, res) => {
             };
             return res.redirect('/dashboard');
         }
-        
+
         res.render('logbooks/edit', {
             title: 'Edit Log',
             user: req.user,
@@ -97,13 +99,13 @@ const updateLog = async (req, res) => {
     try {
         const { day, work } = req.body;
         const images = req.files?.map(file => file.filename) || [];
-        
+
         const log = await Logbook.findOneAndUpdate(
             { _id: req.params.id, student: req.user._id },
             { day, work, $push: { images: { $each: images } } },
             { new: true }
         );
-        
+
         if (!log) {
             req.session.message = {
                 type: 'danger',
@@ -111,7 +113,7 @@ const updateLog = async (req, res) => {
             };
             return res.redirect('/dashboard');
         }
-        
+
         req.session.message = {
             type: 'success',
             message: 'Log updated successfully'

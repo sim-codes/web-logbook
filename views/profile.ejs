@@ -1,0 +1,64 @@
+
+<div class="container">
+    <h1>Manage Your Profile</h1>
+
+    <%- include('./partials/notification.ejs') %>
+
+    <form action="/profile" method="POST">
+        <!-- Common Fields -->
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" name="name" class="form-control" value="<%= user.name %>" required>
+        </div>
+
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" class="form-control" value="<%= user.email %>" required>
+        </div>
+
+        <!-- Role-specific Fields -->
+        <% if (user.role === 'student') { %>
+            <div class="form-group">
+                <label>Matric Number</label>
+                <input type="text" name="matricNumber" class="form-control"
+                        value="<%= user.matricNumber || '' %>">
+            </div>
+
+            <div class="form-group">
+                <label>Institution</label>
+                <input type="hidden" name="institution" value="<%= user.institution._id %>">
+                <input type="text" class="form-control" disabled aria-disabled="true"
+                        value="<%= user.institution.name || '' %>">
+            </div>
+
+        <% } else if (user.role === 'lecturer') { %>
+            <div class="form-group">
+                <label>Staff ID</label>
+                <input type="text" name="staffId" class="form-control"
+                        value="<%= user.staffId || '' %>">
+            </div>
+
+        <% } else if (user.role === 'institution') { %>
+            <div class="form-group">
+                <label>Address</label>
+                <input type="text" name="address" class="form-control"
+                        value="<%= user.address || '' %>">
+            </div>
+
+        <% } else if (user.role === 'itf') { %>
+            <div class="form-group">
+                <label>Region</label>
+                <input type="text" name="region" class="form-control"
+                        value="<%= user.region || '' %>">
+            </div>
+
+            <div class="form-group">
+                <label>Office Address</label>
+                <input type="text" name="officeAddress" class="form-control"
+                        value="<%= user.officeAddress || '' %>">
+            </div>
+        <% } %>
+
+        <button type="submit" class="btn btn-primary my-2">Update Profile</button>
+    </form>
+</div>

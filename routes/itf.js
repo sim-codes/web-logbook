@@ -1,36 +1,52 @@
 const express = require('express');
 const router = express.Router();
 const isAuthenticated = require('../middlewares/auth');
+const isITF = require('../middlewares/itf');
 const {
     getUnapprovedInstitutions,
     approveInstitution,
-    rejectInstitution
+    rejectInstitution,
+    deleteInstitution
 } = require('../controllers/institution');
-const { getApprovedInstitutions } = require('../controllers/institution');
-
-// Middleware to ensure only ITF can access these routes
-const isITF = (req, res, next) => {
-    if (req.user && req.user.role === 'itf') {
-        return next();
-    }
-    req.session.message = {
-        type: 'danger',
-        message: 'Unauthorized access'
-    };
-    res.redirect('/dashboard');
-};
+const { getITFStudents } = require('../controllers/itf')
+const { Institution } = require('../models/user');
 
 // ITF routes
-router.get('/institutions', isAuthenticated, getApprovedInstitutions, (req, res) => {
-    res.render('itf/institutions-list', {
-        title: 'eBooklog - Student Signup',
-        user: req.user,
-        institutions: req.institutions || []
-    });
+router.get('/institutions', isAuthenticated, isITF, async (req, res) => {
+    try {
+        const page = parseInt(req.query.page) || 1;
+        const ITEMS_PER_PAGE = 10;
+        const skip = (page - 1) * ITEMS_PER_PAGE;
+
+        const [institutions, total] = await Promise.all([
+            Institution.find({ approved: true })
+                .skip(skip)
+                .limit(ITEMS_PER_PAGE),
+            Institution.countDocuments({ approved: true })
+        ]);
+
+        res.render('itf/institutions-list', {
+            title: 'eBooklog - Institutions',
+            institutions,
+            currentPage: page,
+            totalPages: Math.ceil(total / ITEMS_PER_PAGE),
+            user: req.user
+        });
+    } catch (err) {
+        console.error(err);
+        req.session.message = {
+            type: 'danger',
+            message: 'Error fetching institutions'
+        };
+        res.redirect('/dashboard');
+    }
 });
 
-router.get('/approve-institutions', isITF, getUnapprovedInstitutions);
-router.post('/approve-institution', isITF, approveInstitution);
-router.post('/reject-institution', isITF, rejectInstitution);
+router.get('/students', isAuthenticated, isITF, getITFStudents);
+
+router.get('/approve-institutions', isAuthenticated, isITF, getUnapprovedInstitutions);
+router.post('/approve-institution', isAuthenticated, isITF, approveInstitution);
+router.post('/reject-institution', isAuthenticated, isITF, rejectInstitution);
+router.post('/delete-institution', isAuthenticated, isITF, deleteInstitution);
 
 module.exports = router;

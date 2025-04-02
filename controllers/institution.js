@@ -1,4 +1,6 @@
-const { Institution } = require('../models/user');
+const { Institution, Student } = require('../models/user');
+
+const ITEMS_PER_PAGE = 10;
 
 const getApprovedInstitutions = async (req, res, next) => {
     try {
@@ -36,8 +38,8 @@ const approveInstitution = async (req, res) => {
         const { institutionId } = req.body;
 
         const institution = await Institution.findByIdAndUpdate(
-            institutionId, 
-            { approved: true }, 
+            institutionId,
+            { approved: true },
             { new: true }
         );
 
@@ -92,4 +94,52 @@ const rejectInstitution = async (req, res) => {
     }
 };
 
-module.exports = { getApprovedInstitutions, getUnapprovedInstitutions, approveInstitution, rejectInstitution  };
+const deleteInstitution = async (req, res) => {
+    try {
+        await Institution.findByIdAndDelete(req.body.institutionId);
+        req.flash('success', 'Institution deleted successfully');
+    } catch (err) {
+        console.error('Error deleting institution:', err);
+        req.flash('error', 'Failed to delete institution');
+    }
+    res.redirect('/itf/institutions');
+};
+
+const getInstitutionStudents = async (req, res) => {
+    try {
+        const page = parseInt(req.query.page) || 1;
+        const skip = (page - 1) * ITEMS_PER_PAGE;
+
+        const [students, total] = await Promise.all([
+            Student.find({ institution: req.user._id })
+                .skip(skip)
+                .limit(ITEMS_PER_PAGE)
+                .populate('supervisor'),
+            Student.countDocuments({ institution: req.user._id })
+        ]);
+
+        res.render('institution/students-list', {
+            title: 'eBooklog - Your Students',
+            students,
+            currentPage: page,
+            totalPages: Math.ceil(total / ITEMS_PER_PAGE),
+            user: req.user
+        });
+    } catch (err) {
+        console.error(err);
+        req.session.message = {
+            type: 'danger',
+            message: 'Error fetching students'
+        };
+        res.redirect('/dashboard');
+    }
+};
+
+module.exports = {
+    getApprovedInstitutions,
+    getUnapprovedInstitutions,
+    approveInstitution,
+    rejectInstitution,
+    deleteInstitution,
+    getInstitutionStudents
+};
