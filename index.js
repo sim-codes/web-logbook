@@ -9,7 +9,8 @@ const dashboardRoutes = require('./routes/dashboard');
 const itfRoutes = require('./routes/itf')
 const profileRoutes = require('./routes/user');
 const institutionRoutes = require('./routes/institution');
-const studentRoutes = require('./routes/student')
+const studentRoutes = require('./routes/student');
+const employerRoutes = require('./routes/employer')
 
 const app = express();
 const PORT = 5000;
@@ -52,6 +53,7 @@ app.use("/dashboard", dashboardRoutes);
 app.use("/student", studentRoutes);
 app.use("/itf", itfRoutes);
 app.use("/institution", institutionRoutes);
+app.use("/employer", employerRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

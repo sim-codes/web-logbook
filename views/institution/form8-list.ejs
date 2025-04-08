@@ -1,0 +1,47 @@
+<section class="pt-3">
+    <h2>Forms to Review</h2>
+    <%- include('../partials/notification.ejs') %>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Student</th>
+                <th>Company</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% forms.forEach(form => { %>
+                <tr>
+                    <td><%= form.student.name %></td>
+                    <td><%= form.studentSection.companyName %></td>
+                    <td><%= form.status %></td>
+                    <td>
+                        <a href="/institution/forms/<%= form._id %>/review" class="btn btn-sm btn-primary">Review</a>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center mt-4">
+            <% if (currentPage > 1) { %>
+                <li class="page-item">
+                    <a class="page-link" href="?page=<%= currentPage - 1 %>">Previous</a>
+                </li>
+            <% } %>
+
+            <% for (let i = 1; i <= totalPages; i++) { %>
+                <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                    <a class="page-link" href="?page=<%= i %>"><%= i %></a>
+                </li>
+            <% } %>
+
+            <% if (currentPage < totalPages) { %>
+                <li class="page-item">
+                    <a class="page-link" href="?page=<%= currentPage + 1 %>">Next</a>
+                </li>
+            <% } %>
+        </ul>
+    </nav>
+</section>

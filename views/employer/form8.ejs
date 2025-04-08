@@ -1,0 +1,44 @@
+<section class="pt-3">
+    <h2>Employer Assessment for <%= form.student.name %></h2>
+    <p>Institution: <%= form.institution.name %></p>
+    <p>Company: <%= form.studentSection.companyName %></p>
+    <form action="/employer/form8/<%= token %>" method="POST">
+        <div class="mb-3">
+            <label for="employerComment" class="form-label">Comments</label>
+            <textarea class="form-control" id="employerComment" name="employerComment" rows="5" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="employerAssessment" class="form-label">Assessment</label>
+            <select class="form-control" id="employerAssessment" name="employerAssessment" required>
+                <option value="VERY GOOD">Very Good</option>
+                <option value="GOOD">Good</option>
+                <option value="SATISFACTORY">Satisfactory</option>
+                <option value="POOR">Poor</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="futureAcceptance" class="form-label">Accept Student in Future?</label>
+            <select class="form-control" id="futureAcceptance" name="futureAcceptance" required>
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="reportingOfficer" class="form-label">Your Name</label>
+            <input type="text" class="form-control" id="reportingOfficer" name="reportingOfficer" required>
+        </div>
+        <div class="mb-3">
+            <label for="officerDesignation" class="form-label">Designation</label>
+            <input type="text" class="form-control" id="officerDesignation" name="officerDesignation" required>
+        </div>
+        <div class="mb-3">
+            <label for="officerEmail" class="form-label">Email</label>
+            <input type="email" class="form-control" id="officerEmail" name="officerEmail" required>
+        </div>
+        <div class="mb-3">
+            <label for="officerPhone" class="form-label">Phone</label>
+            <input type="text" class="form-control" id="officerPhone" name="officerPhone" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Assessment</button>
+    </form>
+</section>

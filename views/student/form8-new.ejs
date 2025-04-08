@@ -1,0 +1,41 @@
+<section class="pt-3">
+    <div class="d-flex justify-content-between mb-4">
+        <h2>New Form8</h2>
+        <a href="/student/form8" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
+    </div>
+    <form action="/student/form8/draft" method="POST">
+        <div class="mb-3">
+            <label for="courseOfStudy" class="form-label">Course of Study</label>
+            <input type="text" class="form-control" id="courseOfStudy" name="courseOfStudy" required>
+        </div>
+        <div class="mb-3">
+            <label for="yearOfStudy" class="form-label">Year of Study</label>
+            <input type="text" class="form-control" id="yearOfStudy" name="yearOfStudy" required>
+        </div>
+        <div class="mb-3">
+            <label for="companyName" class="form-label">Company Name</label>
+            <input type="text" class="form-control" id="companyName" name="companyName" required>
+        </div>
+        <div class="mb-3">
+            <label for="companyAddress" class="form-label">Company Address</label>
+            <textarea class="form-control" id="companyAddress" name="companyAddress" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="department" class="form-label">Department</label>
+            <input type="text" class="form-control" id="department" name="department" required>
+        </div>
+        <div class="mb-3">
+            <label for="startDate" class="form-label">Start Date</label>
+            <input type="date" class="form-control" id="startDate" name="startDate" required>
+        </div>
+        <div class="mb-3">
+            <label for="endDate" class="form-label">End Date</label>
+            <input type="date" class="form-control" id="endDate" name="endDate" required>
+        </div>
+        <div class="mb-3">
+            <label for="trainingExperience" class="form-label">Training Experience</label>
+            <textarea class="form-control" id="trainingExperience" name="trainingExperience" rows="5" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Save Draft</button>
+    </form>
+</section>

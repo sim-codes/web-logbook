@@ -1,0 +1,70 @@
+<section class="pt-3">
+    <div class="d-flex justify-content-between mb-4">
+        <h2>Review Form8 for <%= form.student.name %></h2>
+        <a href="/institution/forms" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
+    </div>
+
+    <h4>Student Details</h4>
+    <p>Company: <%= form.studentSection.companyName %></p>
+    <p>Period: <%= form.studentSection.startDate.toDateString() %> to <%= form.studentSection.endDate.toDateString() %></p>
+    <p>Training Experience: <%= form.studentSection.trainingExperience %></p>
+
+    <h4>Employer Assessment</h4>
+    <p>Comment: <%= form.employerSection.employerComment %></p>
+    <p>Assessment: <%= form.employerSection.employerAssessment %></p>
+    <p>Future Acceptance: <%= form.employerSection.futureAcceptance ? 'Yes' : 'No' %></p>
+
+    <h4>Institution Assessment</h4>
+    <form action="/institution/forms/<%= form._id %>/review" method="POST">
+        <div class="mb-3">
+            <label for="numberOfVisits" class="form-label">Number of Visits</label>
+            <input type="number" class="form-control" id="numberOfVisits" name="numberOfVisits" min="0" required>
+        </div>
+        <div class="mb-3">
+            <label for="facilityAssessment" class="form-label">Facility Assessment</label>
+            <select class="form-control" id="facilityAssessment" name="facilityAssessment" required>
+                <option value="STANDARD">Standard</option>
+                <option value="ADEQUATE">Adequate</option>
+                <option value="RELEVANT">Relevant</option>
+                <option value="NOT RELEVANT">Not Relevant</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="studentInvolvement" class="form-label">Student Involvement</label>
+            <select class="form-control" id="studentInvolvement" name="studentInvolvement" required>
+                <option value="FULLY">Fully</option>
+                <option value="PARTIALLY">Partially</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="studentPerformanceGrade" class="form-label">Performance Grade</label>
+            <select class="form-control" id="studentPerformanceGrade" name="studentPerformanceGrade" required>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="supervisorComments" class="form-label">Comments</label>
+            <textarea class="form-control" id="supervisorComments" name="supervisorComments" rows="5" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="supervisorName" class="form-label">Supervisor Name</label>
+            <input type="text" class="form-control" id="supervisorName" name="supervisorName" value="<%= user.name %>" required>
+        </div>
+        <div class="mb-3">
+            <label for="supervisorDepartment" class="form-label">Department</label>
+            <input type="text" class="form-control" id="supervisorDepartment" name="supervisorDepartment" required>
+        </div>
+        <div class="mb-3">
+            <label for="supervisorEmail" class="form-label">Email</label>
+            <input type="email" class="form-control" id="supervisorEmail" name="supervisorEmail" value="<%= user.email %>" required>
+        </div>
+        <div class="mb-3">
+            <label for="supervisorPhone" class="form-label">Phone</label>
+            <input type="text" class="form-control" id="supervisorPhone" name="supervisorPhone" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Review</button>
+    </form>
+</section>
