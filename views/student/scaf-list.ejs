@@ -31,7 +31,9 @@
                                     status: scaf.status
                                 }) %>'>View</button>
                         <% if (scaf.status === 'draft') { %>
-                            <a href="/student/scafs/<%= scaf._id %>/submit" class="btn btn-sm btn-success">Submit</a>
+                            <form action="/student/scafs/<%= scaf._id %>/submit" method="POST" class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-success">Submit</button>
+                            </form>
                         <% } %>
                     </td>
                 </tr>
