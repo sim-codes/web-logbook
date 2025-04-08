@@ -185,7 +185,7 @@ const getInstitutionForms = async (req, res) => {
 const reviewInstitutionForm = async (req, res) => {
     try {
         const formId = req.params.id;
-        const institutionId = req.user.institution;
+        const institutionId = req.user._id;
 
         const form = await Form8.findOne({ _id: formId, institution: institutionId })
             .populate('student', 'name')
@@ -208,6 +208,51 @@ const reviewInstitutionForm = async (req, res) => {
     }
 };
 
+const submitInstitutionForm = async (req, res) => {
+    try {
+        const formId = req.params.id;
+        const institutionId = req.user._id;
+        const {
+            numberOfVisits,
+            facilityAssessment,
+            studentInvolvement,
+            studentPerformanceGrade,
+            supervisorComments,
+            supervisorName,
+            supervisorDepartment,
+            supervisorEmail,
+            supervisorPhone
+        } = req.body;
+
+        const form = await Form8.findOne({ _id: formId, institution: institutionId });
+        if (!form || !['reviewed-employer', 'submitted-employer'].includes(form.status)) {
+            req.session.message = { type: 'danger', message: 'Form not found or not ready for review' };
+            return res.redirect('/institution/forms');
+        }
+
+        form.institutionSection.numberOfVisits = numberOfVisits;
+        form.institutionSection.facilityAssessment = facilityAssessment;
+        form.institutionSection.studentInvolvement = studentInvolvement;
+        form.institutionSection.studentPerformanceGrade = studentPerformanceGrade;
+        form.institutionSection.supervisorComments = supervisorComments;
+        form.institutionSection.supervisor = req.user._id;
+        form.institutionSection.supervisorName = supervisorName;
+        form.institutionSection.supervisorDepartment = supervisorDepartment;
+        form.institutionSection.supervisorEmail = supervisorEmail;
+        form.institutionSection.supervisorPhone = supervisorPhone;
+        form.institutionSection.supervisorSignatureDate = new Date();
+        form.status = 'completed';
+
+        await form.save();
+        req.session.message = { type: 'success', message: 'Form review completed' };
+        res.redirect('/institution/forms');
+    } catch (err) {
+        console.error(err);
+        req.session.message = { type: 'danger', message: 'Error submitting review' };
+        res.redirect('/institution/forms');
+    }
+};
+
 module.exports = {
     getStudentForms,
     createForm8,
@@ -215,5 +260,6 @@ module.exports = {
     getEmployerForm,
     submitEmployerForm,
     getInstitutionForms,
-    reviewInstitutionForm
+    reviewInstitutionForm,
+    submitInstitutionForm
 };
