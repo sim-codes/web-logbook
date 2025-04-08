@@ -161,11 +161,11 @@ const getInstitutionForms = async (req, res) => {
         const institutionId = req.user._id;
 
         const [forms, total] = await Promise.all([
-            Form8.find({ institution: institutionId, status: { $in: ['reviewed-employer', 'submitted-employer'] } })
+            Form8.find({ institution: institutionId, status: { $in: ['reviewed-employer', 'submitted-employer', 'completed'] } })
                 .skip(skip)
                 .limit(ITEMS_PER_PAGE)
                 .populate('student', 'name'),
-            Form8.countDocuments({ institution: institutionId, status: { $in: ['reviewed-employer', 'submitted-employer'] } })
+            Form8.countDocuments({ institution: institutionId, status: { $in: ['reviewed-employer', 'submitted-employer', 'completed'] } })
         ]);
 
         res.render('institution/form8-list', {

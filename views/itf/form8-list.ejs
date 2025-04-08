@@ -19,8 +19,19 @@
                     <td><%= form.studentSection.companyName %></td>
                     <td><%= form.status %></td>
                     <td>
+                        <button class="btn btn-sm btn-info view-form" 
+                                data-form='<%= JSON.stringify({
+                                    studentName: form.student.name,
+                                    institutionName: form.institution.name,
+                                    companyName: form.studentSection.companyName,
+                                    courseOfStudy: form.studentSection.courseOfStudy,
+                                    employerComment: form.employerSection.employerComment,
+                                    employerAssessment: form.employerSection.employerAssessment,
+                                    studentPerformanceGrade: form.institutionSection.studentPerformanceGrade,
+                                    status: form.status
+                                }) %>'>View</button>
                         <a href="/itf/form8s/<%= form._id %>/delete" class="btn btn-sm btn-danger" 
-                            onclick="return confirm('Are you sure you want to delete this Form8?');">Delete</a>
+                           onclick="return confirm('Are you sure you want to delete this Form8?');">Delete</a>
                     </td>
                 </tr>
             <% }) %>
@@ -35,4 +46,49 @@
             <% } %>
         </ul>
     </nav>
+
+    <!-- Modal -->
+    <div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="formModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="formModalLabel">Form8 Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Student Name:</strong> <span id="modal-studentName"></span></p>
+                    <p><strong>Institution:</strong> <span id="modal-institutionName"></span></p>
+                    <p><strong>Company Name:</strong> <span id="modal-companyName"></span></p>
+                    <p><strong>Course of Study:</strong> <span id="modal-courseOfStudy"></span></p>
+                    <p><strong>Employer Comment:</strong> <span id="modal-employerComment"></span></p>
+                    <p><strong>Employer Assessment:</strong> <span id="modal-employerAssessment"></span></p>
+                    <p><strong>Student Performance Grade:</strong> <span id="modal-studentPerformanceGrade"></span></p>
+                    <p><strong>Status:</strong> <span id="modal-status"></span></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const viewButtons = document.querySelectorAll('.view-form');
+        viewButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const formData = JSON.parse(button.getAttribute('data-form'));
+                document.getElementById('modal-studentName').textContent = formData.studentName;
+                document.getElementById('modal-institutionName').textContent = formData.institutionName;
+                document.getElementById('modal-companyName').textContent = formData.companyName;
+                document.getElementById('modal-courseOfStudy').textContent = formData.courseOfStudy;
+                document.getElementById('modal-employerComment').textContent = formData.employerComment || 'Not filled';
+                document.getElementById('modal-employerAssessment').textContent = formData.employerAssessment || 'Not filled';
+                document.getElementById('modal-studentPerformanceGrade').textContent = formData.studentPerformanceGrade || 'Not filled';
+                document.getElementById('modal-status').textContent = formData.status;
+                new bootstrap.Modal(document.getElementById('formModal')).show();
+            });
+        });
+    });
+</script>
