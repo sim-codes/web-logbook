@@ -1,6 +1,11 @@
 const { SCAF } = require('../models/forms');
 const { Student } = require('../models/user');
+const crypto = require('crypto');
 const ITEMS_PER_PAGE = 10;
+
+const generateOrgToken = () => {
+    return crypto.randomBytes(16).toString('hex');
+};
 
 // Student: View SCAF list
 const getStudentSCAFs = async (req, res) => {
@@ -120,36 +125,38 @@ const reviewSCAF = async (req, res) => {
     }
 };
 
-// Institution: Submit SCAF
+// Student: Submit SCAF for organization review
 const submitSCAF = async (req, res) => {
     try {
         const scafId = req.params.id;
-        const { name, address, phoneNumber, email } = req.body;
+        const scaf = await SCAF.findOne({ _id: scafId, 'students.student': req.user._id });
 
-        const scaf = await SCAF.findOne({ _id: scafId, institution: req.user._id });
         if (!scaf) {
             req.session.message = { type: 'danger', message: 'SCAF not found' };
-            return res.redirect('/institution/scafs');
+            return res.redirect('/student/scafs');
         }
 
-        scaf.organizationSection.name = name;
-        scaf.organizationSection.address = address;
-        scaf.organizationSection.phoneNumber = phoneNumber;
-        scaf.organizationSection.email = email;
-        scaf.organizationSection.filledByUser = req.user._id;
-        scaf.submissionDate = new Date();
-        scaf.status = 'submitted-organization';
+        if (scaf.status !== 'draft') {
+            req.session.message = { type: 'danger', message: 'SCAF already submitted' };
+            return res.redirect('/student/scafs');
+        }
 
+        const token = generateOrgToken();
+        scaf.organizationSection.token = token;
+        scaf.organizationSection.tokenExpires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days
+        scaf.status = 'submitted-student';
         await scaf.save();
-        req.session.message = { type: 'success', message: 'SCAF submitted' };
-        res.redirect('/institution/scafs');
+
+        // TODO: Send email with link `/scaf/organization/${token}` to organization
+        console.log(`Please complete the assessment: ${req.protocol}://${req.get('host')}/organization/scaf/${token}`)
+        req.session.message = { type: 'success', message: 'SCAF submitted, organization notified' };
+        res.redirect('/student/scafs');
     } catch (err) {
         console.error(err);
         req.session.message = { type: 'danger', message: 'Error submitting SCAF' };
-        res.redirect('/institution/scafs');
+        res.redirect('/student/scafs');
     }
 };
-
 // ITF: View completed SCAFs
 const getITFSCAFs = async (req, res) => {
     try {
@@ -200,6 +207,56 @@ const deleteSCAF = async (req, res) => {
     }
 };
 
+// Organization: Access SCAF via token
+const getOrgSCAF = async (req, res) => {
+    try {
+        const token = req.params.token;
+        const scaf = await SCAF.findOne({ 'organizationSection.token': token })
+            .populate('students.student', 'name');
+
+        if (!scaf || new Date() > scaf.organizationSection.tokenExpires) {
+            return res.status(404).send('Invalid or expired link');
+        }
+
+        res.render('organization/scaf', {
+            title: 'Organization SCAF Details',
+            scaf,
+            token
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Server error');
+    }
+};
+
+// Organization: Submit their section
+const submitOrgSCAF = async (req, res) => {
+    try {
+        const token = req.params.token;
+        const { name, address, phoneNumber, email } = req.body;
+
+        const scaf = await SCAF.findOne({ 'organizationSection.token': token });
+        if (!scaf || new Date() > scaf.organizationSection.tokenExpires) {
+            return res.status(404).send('Invalid or expired link');
+        }
+
+        scaf.organizationSection.name = name;
+        scaf.organizationSection.address = address;
+        scaf.organizationSection.phoneNumber = phoneNumber;
+        scaf.organizationSection.email = email;
+        scaf.submissionDate = new Date();
+        scaf.status = 'submitted-organization';
+        scaf.organizationSection.token = null;
+        scaf.organizationSection.tokenExpires = null;
+
+        await scaf.save();
+        res.send('SCAF submitted successfully. Thank you!');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error submitting SCAF');
+    }
+};
+
 
 module.exports = {
     getStudentSCAFs,
@@ -208,5 +265,7 @@ module.exports = {
     reviewSCAF,
     submitSCAF,
     getITFSCAFs,
-    deleteSCAF
+    deleteSCAF,
+    getOrgSCAF,
+    submitOrgSCAF
 };

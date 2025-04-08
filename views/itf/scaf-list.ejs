@@ -19,6 +19,19 @@
                     <td><%= scaf.students.length %></td>
                     <td><%= scaf.status %></td>
                     <td>
+                        <button class="btn btn-sm btn-info view-scaf"
+                            data-scaf='<%= JSON.stringify({
+                                organizationName: scaf.organizationSection.name || 'Not Filled',
+                                organizationAddress: scaf.organizationSection.address || 'Not Filled',
+                                organizationPhone: scaf.organizationSection.phoneNumber || 'Not Filled',
+                                organizationEmail: scaf.organizationSection.email || 'Not Filled',
+                                students: scaf.students.map(s => ({
+                                    name: s.student.name,
+                                    courseOfStudy: s.courseOfStudy,
+                                    commencementDate: s.commencementDate.toDateString()
+                                })),
+                                status: scaf.status
+                            }) %>'>View</button>
                         <a href="/itf/scafs/<%= scaf._id %>/delete" class="btn btn-sm btn-danger" 
                             onclick="return confirm('Are you sure you want to delete this SCAF?');">Delete</a>
                     </td>
@@ -35,4 +48,49 @@
             <% } %>
         </ul>
     </nav>
+
+    <!-- Modal -->
+    <div class="modal fade" id="scafModal" tabindex="-1" aria-labelledby="scafModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="scafModalLabel">SCAF Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Organization Name:</strong> <span id="modal-organizationName"></span></p>
+                    <p><strong>Address:</strong> <span id="modal-organizationAddress"></span></p>
+                    <p><strong>Phone Number:</strong> <span id="modal-organizationPhone"></span></p>
+                    <p><strong>Email:</strong> <span id="modal-organizationEmail"></span></p>
+                    <p><strong>Students:</strong></p>
+                    <ul id="modal-students"></ul>
+                    <p><strong>Status:</strong> <span id="modal-status"></span></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const viewButtons = document.querySelectorAll('.view-scaf');
+        viewButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const scafData = JSON.parse(button.getAttribute('data-scaf'));
+                document.getElementById('modal-organizationName').textContent = scafData.organizationName;
+                document.getElementById('modal-organizationAddress').textContent = scafData.organizationAddress;
+                document.getElementById('modal-organizationPhone').textContent = scafData.organizationPhone;
+                document.getElementById('modal-organizationEmail').textContent = scafData.organizationEmail;
+                const studentsList = document.getElementById('modal-students');
+                studentsList.innerHTML = scafData.students.map(s => 
+                    `<li>${s.name} - ${s.courseOfStudy} (Started: ${s.commencementDate})</li>`
+                ).join('');
+                document.getElementById('modal-status').textContent = scafData.status;
+                new bootstrap.Modal(document.getElementById('scafModal')).show();
+            });
+        });
+    });
+</script>

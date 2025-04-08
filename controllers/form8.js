@@ -89,7 +89,7 @@ const submitForm8 = async (req, res) => {
         await form.save();
 
         // TODO: Send email with link `/form8/employer/${token}` to employer (implement email logic)
-        console.log(`Please complete the assessment: ${req.protocol}://${req.get('host')}/employer/form8/${token}`)
+        console.log(`Please complete the assessment: ${req.protocol}://${req.get('host')}/organization/form8/${token}`)
         req.session.message = { type: 'success', message: 'Form submitted, employer notified' };
         res.redirect('/student/form8');
     } catch (err) {

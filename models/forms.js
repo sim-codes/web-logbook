@@ -20,9 +20,12 @@ const CommencementFormSchema = new mongoose.Schema({
         address: String,
         phoneNumber: String,
         email: String,
-        filledByUser: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'User'
+        token: {
+            type: String,
+            unique: true
+        },
+        tokenExpires: {
+            type: Date
         }
     },
     institution: {
@@ -30,27 +33,10 @@ const CommencementFormSchema = new mongoose.Schema({
         ref: 'Institution'
     },
     students: [StudentEntrySchema],
-    institutionApprover: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    },
-    institutionComments: String,
-    itfApprover: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'ITF'
-    },
-    itfComments: String,
     submissionDate: Date,
     status: {
         type: String,
-        enum: [
-            'draft',
-            'submitted-student',
-            'submitted-organization',
-            'approved-institution',
-            'approved-itf',
-            'rejected'
-        ],
+        enum: ['draft', 'submitted-student', 'submitted-organization', 'approved-itf'],
         default: 'draft'
     },
     createdBy: {

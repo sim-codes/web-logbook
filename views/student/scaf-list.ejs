@@ -9,6 +9,7 @@
                 <th>Commencement Date</th>
                 <th>Completion Date</th>
                 <th>Status</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -18,8 +19,66 @@
                     <td><%= scaf.students.find(s => s.student.equals(user._id)).commencementDate.toDateString() %></td>
                     <td><%= scaf.students.find(s => s.student.equals(user._id)).completionDate.toDateString() %></td>
                     <td><%= scaf.status %></td>
+                    <td>
+                        <button class="btn btn-sm btn-info view-scaf"
+                                data-scaf='<%= JSON.stringify({
+                                    organizationName: scaf.organizationSection.name || 'Not Filled',
+                                    courseOfStudy: scaf.students.find(s => s.student.equals(user._id)).courseOfStudy,
+                                    yearOrLevel: scaf.students.find(s => s.student.equals(user._id)).yearOrLevel,
+                                    attachmentPeriodMonths: scaf.students.find(s => s.student.equals(user._id)).attachmentPeriodMonths,
+                                    commencementDate: scaf.students.find(s => s.student.equals(user._id)).commencementDate.toDateString(),
+                                    completionDate: scaf.students.find(s => s.student.equals(user._id)).completionDate.toDateString(),
+                                    status: scaf.status
+                                }) %>'>View</button>
+                        <% if (scaf.status === 'draft') { %>
+                            <a href="/student/scafs/<%= scaf._id %>/submit" class="btn btn-sm btn-success">Submit</a>
+                        <% } %>
+                    </td>
                 </tr>
             <% }) %>
         </tbody>
     </table>
+
+    <!-- Modal -->
+    <div class="modal fade" id="scafModal" tabindex="-1" aria-labelledby="scafModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="scafModalLabel">SCAF Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Organization Name:</strong> <span id="modal-organizationName"></span></p>
+                    <p><strong>Course of Study:</strong> <span id="modal-courseOfStudy"></span></p>
+                    <p><strong>Year/Level:</strong> <span id="modal-yearOrLevel"></span></p>
+                    <p><strong>Attachment Period (Months):</strong> <span id="modal-attachmentPeriodMonths"></span></p>
+                    <p><strong>Commencement Date:</strong> <span id="modal-commencementDate"></span></p>
+                    <p><strong>Completion Date:</strong> <span id="modal-completionDate"></span></p>
+                    <p><strong>Status:</strong> <span id="modal-status"></span></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const viewButtons = document.querySelectorAll('.view-scaf');
+        viewButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const scafData = JSON.parse(button.getAttribute('data-scaf'));
+                document.getElementById('modal-organizationName').textContent = scafData.organizationName;
+                document.getElementById('modal-courseOfStudy').textContent = scafData.courseOfStudy;
+                document.getElementById('modal-yearOrLevel').textContent = scafData.yearOrLevel;
+                document.getElementById('modal-attachmentPeriodMonths').textContent = scafData.attachmentPeriodMonths;
+                document.getElementById('modal-commencementDate').textContent = scafData.commencementDate;
+                document.getElementById('modal-completionDate').textContent = scafData.completionDate;
+                document.getElementById('modal-status').textContent = scafData.status;
+                new bootstrap.Modal(document.getElementById('scafModal')).show();
+            });
+        });
+    });
+</script>
