@@ -253,6 +253,56 @@ const submitInstitutionForm = async (req, res) => {
     }
 };
 
+// ITF: View completed Form8s
+const getITFForm8s = async (req, res) => {
+    try {
+        const page = parseInt(req.query.page) || 1;
+        const skip = (page - 1) * ITEMS_PER_PAGE;
+
+        const [forms, total] = await Promise.all([
+            Form8.find({ status: 'completed' })
+                .skip(skip)
+                .limit(ITEMS_PER_PAGE)
+                .populate('student', 'name')
+                .populate('institution', 'name'),
+            Form8.countDocuments({ status: 'completed' })
+        ]);
+
+        res.render('itf/form8-list', {
+            title: 'eBooklog - Completed Form8s',
+            forms,
+            currentPage: page,
+            totalPages: Math.ceil(total / ITEMS_PER_PAGE),
+            user: req.user
+        });
+    } catch (err) {
+        console.error(err);
+        req.session.message = { type: 'danger', message: 'Error fetching completed Form8s' };
+        res.redirect('/dashboard');
+    }
+};
+
+// ITF: Delete a Form8
+const deleteForm8 = async (req, res) => {
+    try {
+        const formId = req.params.id;
+        const form = await Form8.findOne({ _id: formId, status: 'completed' });
+
+        if (!form) {
+            req.session.message = { type: 'danger', message: 'Form not found or not completed' };
+            return res.redirect('/itf/form8s');
+        }
+
+        await Form8.deleteOne({ _id: formId });
+        req.session.message = { type: 'success', message: 'Form8 deleted successfully' };
+        res.redirect('/itf/form8s');
+    } catch (err) {
+        console.error(err);
+        req.session.message = { type: 'danger', message: 'Error deleting Form8' };
+        res.redirect('/itf/form8s');
+    }
+};
+
 module.exports = {
     getStudentForms,
     createForm8,
@@ -261,5 +311,7 @@ module.exports = {
     submitEmployerForm,
     getInstitutionForms,
     reviewInstitutionForm,
-    submitInstitutionForm
+    submitInstitutionForm,
+    getITFForm8s,
+    deleteForm8
 };

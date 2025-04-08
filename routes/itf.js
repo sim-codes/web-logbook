@@ -10,6 +10,17 @@ const {
 } = require('../controllers/institution');
 const { getITFStudents } = require('../controllers/itf')
 const { Institution } = require('../models/user');
+const { getITFForm8s, deleteForm8 } = require('../controllers/form8');
+
+router.get('/form8s', isAuthenticated, isITF, getITFForm8s);
+router.get('/form8s/:id/delete', isAuthenticated, isITF, deleteForm8);
+
+router.get('/students', isAuthenticated, isITF, getITFStudents);
+
+router.get('/approve-institutions', isAuthenticated, isITF, getUnapprovedInstitutions);
+router.post('/approve-institution', isAuthenticated, isITF, approveInstitution);
+router.post('/reject-institution', isAuthenticated, isITF, rejectInstitution);
+router.post('/delete-institution', isAuthenticated, isITF, deleteInstitution);
 
 // ITF routes
 router.get('/institutions', isAuthenticated, isITF, async (req, res) => {
@@ -41,12 +52,4 @@ router.get('/institutions', isAuthenticated, isITF, async (req, res) => {
         res.redirect('/dashboard');
     }
 });
-
-router.get('/students', isAuthenticated, isITF, getITFStudents);
-
-router.get('/approve-institutions', isAuthenticated, isITF, getUnapprovedInstitutions);
-router.post('/approve-institution', isAuthenticated, isITF, approveInstitution);
-router.post('/reject-institution', isAuthenticated, isITF, rejectInstitution);
-router.post('/delete-institution', isAuthenticated, isITF, deleteInstitution);
-
 module.exports = router;
