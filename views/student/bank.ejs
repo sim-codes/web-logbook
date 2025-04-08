@@ -1,3 +1,115 @@
 <section class="pt-3">
-    <h2 class="my-4">Your Bank Information </h2>
+    <h2 class="my-4">Your Bank Information</h2>
+
+    <%- include('../partials/notification.ejs') %>
+
+    <% if (bankDetails) { %>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Bank Account Details</h5>
+                <dl class="row">
+                    <dt class="col-sm-3">Account Number:</dt>
+                    <dd class="col-sm-9"><%= bankDetails.accountNumber %></dd>
+
+                    <dt class="col-sm-3">Bank Name:</dt>
+                    <dd class="col-sm-9"><%= bankDetails.bankName %></dd>
+
+                    <dt class="col-sm-3">Account Name:</dt>
+                    <dd class="col-sm-9"><%= bankDetails.accountName %></dd>
+
+                    <dt class="col-sm-3">Bank Sort Code:</dt>
+                    <dd class="col-sm-9"><%= bankDetails.bankSortCode %></dd>
+
+                    <dt class="col-sm-3">Created At:</dt>
+                    <dd class="col-sm-9"><%= bankDetails.createdAt.toDateString() %></dd>
+                </dl>
+                <div class="alert alert-info">
+                    Note: Bank details cannot be modified once submitted.
+                </div>
+            </div>
+        </div>
+    <% } else { %>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Register Bank Account</h5>
+                <form method="POST" action="/student/bank">
+                    <div class="form-group">
+                        <label for="accountNumber">Account Number</label>
+                        <input type="text" class="form-control" id="accountNumber" name="accountNumber" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bankName">Bank Name</label>
+                        <select class="form-control" id="bankName" name="bankName" required>
+                            <option value="">Select a Bank</option>
+                            <option value="Access Bank">Access Bank</option>
+                            <option value="Zenith Bank">Zenith Bank</option>
+                            <option value="Guaranty Trust Bank (GTBank)">Guaranty Trust Bank (GTBank)</option>
+                            <option value="United Bank for Africa (UBA)">United Bank for Africa (UBA)</option>
+                            <option value="First Bank of Nigeria">First Bank of Nigeria</option>
+                            <option value="Union Bank of Nigeria">Union Bank of Nigeria</option>
+                            <option value="Fidelity Bank">Fidelity Bank</option>
+                            <option value="Stanbic IBTC Bank">Stanbic IBTC Bank</option>
+                            <option value="First City Monument Bank (FCMB)">First City Monument Bank (FCMB)</option>
+                            <option value="Wema Bank">Wema Bank</option>
+                            <option value="Sterling Bank">Sterling Bank</option>
+                            <option value="Polaris Bank">Polaris Bank</option>
+                            <option value="Ecobank Nigeria">Ecobank Nigeria</option>
+                            <option value="Heritage Bank">Heritage Bank</option>
+                            <option value="Keystone Bank">Keystone Bank</option>
+                            <option value="Unity Bank">Unity Bank</option>
+                            <option value="Globus Bank">Globus Bank</option>
+                            <option value="Titan Trust Bank">Titan Trust Bank</option>
+                            <option value="Providus Bank">Providus Bank</option>
+                            <option value="Jaiz Bank">Jaiz Bank</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="accountName">Account Name</label>
+                        <input type="text" class="form-control" id="accountName" name="accountName" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bankSortCode">Bank Sort Code</label>
+                        <input type="text" class="form-control" id="bankSortCode" name="bankSortCode" readonly required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary my-2">Submit Bank Details</button>
+                </form>
+            </div>
+        </div>
+    <% } %>
 </section>
+
+<!-- Add JavaScript at the bottom -->
+<script>
+    const bankSortCodes = {
+        "Access Bank": "044",
+        "Zenith Bank": "057",
+        "Guaranty Trust Bank (GTBank)": "058",
+        "United Bank for Africa (UBA)": "033",
+        "First Bank of Nigeria": "011",
+        "Union Bank of Nigeria": "032",
+        "Fidelity Bank": "070",
+        "Stanbic IBTC Bank": "221",
+        "First City Monument Bank (FCMB)": "214",
+        "Wema Bank": "035",
+        "Sterling Bank": "232",
+        "Polaris Bank": "076",
+        "Ecobank Nigeria": "050",
+        "Heritage Bank": "030",
+        "Keystone Bank": "082",
+        "Unity Bank": "215",
+        "Globus Bank": "001",
+        "Titan Trust Bank": "002",
+        "Providus Bank": "101",
+        "Jaiz Bank": "301"
+    };
+
+    document.getElementById('bankName').addEventListener('change', function() {
+        const selectedBank = this.value;
+        const sortCodeField = document.getElementById('bankSortCode');
+        sortCodeField.value = bankSortCodes[selectedBank] || '';
+    });
+</script>
