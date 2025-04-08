@@ -1,0 +1,29 @@
+<section class="pt-3">
+    <div class="d-flex justify-content-between mb-4">
+        <h2>New SCAF Entry</h2>
+        <a href="/student/scafs" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
+    </div>
+    <form action="/student/scafs" method="POST">
+        <div class="mb-3">
+            <label for="courseOfStudy" class="form-label">Course of Study</label>
+            <input type="text" class="form-control" id="courseOfStudy" name="courseOfStudy" required>
+        </div>
+        <div class="mb-3">
+            <label for="yearOrLevel" class="form-label">Year/Level</label>
+            <input type="text" class="form-control" id="yearOrLevel" name="yearOrLevel" required>
+        </div>
+        <div class="mb-3">
+            <label for="attachmentPeriodMonths" class="form-label">Attachment Period (Months)</label>
+            <input type="number" class="form-control" id="attachmentPeriodMonths" name="attachmentPeriodMonths" min="1" required>
+        </div>
+        <div class="mb-3">
+            <label for="commencementDate" class="form-label">Commencement Date</label>
+            <input type="date" class="form-control" id="commencementDate" name="commencementDate" required>
+        </div>
+        <div class="mb-3">
+            <label for="completionDate" class="form-label">Completion Date</label>
+            <input type="date" class="form-control" id="completionDate" name="completionDate" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Entry</button>
+    </form>
+</section>

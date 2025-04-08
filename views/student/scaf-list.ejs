@@ -1,0 +1,25 @@
+<section class="pt-3">
+    <h2>My SCAFs</h2>
+    <%- include('../partials/notification.ejs') %>
+    <a href="/student/scafs/new" class="btn btn-primary mb-3">Add New SCAF Entry</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Institution</th>
+                <th>Commencement Date</th>
+                <th>Completion Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% scafs.forEach(scaf => { %>
+                <tr>
+                    <td><%= scaf.institution.name %></td>
+                    <td><%= scaf.students.find(s => s.student.equals(user._id)).commencementDate.toDateString() %></td>
+                    <td><%= scaf.students.find(s => s.student.equals(user._id)).completionDate.toDateString() %></td>
+                    <td><%= scaf.status %></td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</section>

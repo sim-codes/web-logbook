@@ -11,9 +11,13 @@ const {
 const { getITFStudents } = require('../controllers/itf')
 const { Institution } = require('../models/user');
 const { getITFForm8s, deleteForm8 } = require('../controllers/form8');
+const { getITFSCAFs, deleteSCAF } = require('../controllers/scaf');
 
 router.get('/form8s', isAuthenticated, isITF, getITFForm8s);
 router.get('/form8s/:id/delete', isAuthenticated, isITF, deleteForm8);
+
+router.get('/scafs', isAuthenticated, isITF, getITFSCAFs);
+router.get('/scafs/:id/delete', isAuthenticated, isITF, deleteSCAF);
 
 router.get('/students', isAuthenticated, isITF, getITFStudents);
 

@@ -1,0 +1,35 @@
+<section class="pt-3">
+    <h2>SCAF Review</h2>
+    <%- include('../partials/notification.ejs') %>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Students</th>
+                <th>Organization</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% scafs.forEach(scaf => { %>
+                <tr>
+                    <td><%= scaf.students.length %> Students</td>
+                    <td><%= scaf.organizationSection.name || 'Not Filled' %></td>
+                    <td><%= scaf.status %></td>
+                    <td>
+                        <a href="/institution/scafs/<%= scaf._id %>/review" class="btn btn-sm btn-primary">Review</a>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+    <nav>
+        <ul class="pagination">
+            <% for (let i = 1; i <= totalPages; i++) { %>
+                <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                    <a class="page-link" href="?page=<%= i %>"><%= i %></a>
+                </li>
+            <% } %>
+        </ul>
+    </nav>
+</section>
