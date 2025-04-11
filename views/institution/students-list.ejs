@@ -10,6 +10,7 @@
                         <th>Matric Number</th>
                         <th>Supervisor</th>
                         <th>Email</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -19,6 +20,11 @@
                             <td><%= student.matricNumber %></td>
                             <td><%= student.supervisor?.name || 'N/A' %></td>
                             <td><%= student.email %></td>
+                            <td>
+                                <a href="/student/<%= student._id %>/bank-details" class="btn btn-sm btn-info">
+                                    View Bank
+                                </a>
+                            </td>
                         </tr>
                     <% }); %>
                 </tbody>

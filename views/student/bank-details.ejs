@@ -1,0 +1,40 @@
+<section class="pt-3">
+    <h2 class="my-4">Student Bank Information</h2>
+
+    <%- include('../partials/notification.ejs') %>
+
+    <% if (bankDetails) { %>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">
+                    Showing <strong><%= student.name%></strong> Bank Account Details
+                </h5>
+                <hr />
+                <dl class="row">
+                    <dt class="col-sm-3">Account Number:</dt>
+                    <dd class="col-sm-9"><%= bankDetails.accountNumber %></dd>
+
+                    <dt class="col-sm-3">Bank Name:</dt>
+                    <dd class="col-sm-9"><%= bankDetails.bankName %></dd>
+
+                    <dt class="col-sm-3">Account Name:</dt>
+                    <dd class="col-sm-9"><%= bankDetails.accountName %></dd>
+
+                    <dt class="col-sm-3">Bank Sort Code:</dt>
+                    <dd class="col-sm-9"><%= bankDetails.bankSortCode %></dd>
+
+                    <dt class="col-sm-3">Created At:</dt>
+                    <dd class="col-sm-9"><%= bankDetails.createdAt.toDateString() %></dd>
+                </dl>
+            </div>
+        </div>
+    <% } else { %>
+        <div class="card">
+            <div class="card-body">
+                <div class="alert alert-info">
+                    Student does not have an account
+                </div>
+            </div>
+        </div>
+    <% } %>
+</section>

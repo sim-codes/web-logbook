@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const isAuthenticated = require('../middlewares/auth');
-const { getBankDetails, postBankDetails } = require('../controllers/student')
+const { getBankDetails, postBankDetails, getStudentBankDetails } = require('../controllers/student')
 const { getStudentForms, createForm8, submitForm8 } = require('../controllers/form8');
 const { getStudentSCAFs, createSCAF, submitSCAF } = require('../controllers/scaf');
 
 router.get('/bank-details', isAuthenticated, getBankDetails);
 router.post('/bank', isAuthenticated, postBankDetails);
+router.get('/:id/bank-details', isAuthenticated, getStudentBankDetails);
 
 router.get('/scafs', isAuthenticated, getStudentSCAFs);
 router.post('/scafs', isAuthenticated, createSCAF);
