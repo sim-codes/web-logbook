@@ -14,7 +14,6 @@ const BaseUserSchema = new mongoose.Schema({
         enum: ['student', 'lecturer', 'institution', 'itf', 'admin'],
         required: true
     },
-    profileImageUrl: String,
     createdAt: {
         type: Date,
         default: Date.now

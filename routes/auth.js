@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const isAuthenticated = require('../middlewares/auth');
+const upload = require('../multer');
 const {
     signin,
     signup,
@@ -13,7 +14,7 @@ const { getApprovedInstitutions } = require('../controllers/institution');
 
 // Authentication routes
 router.get('/signin', signin);
-router.get('/signup/select-role', signup);
+router.get('/signup/select-role', upload, signup);
 
 // Specific signup routes with institution fetching
 router.get('/signup/student', getApprovedInstitutions, (req, res) => {
@@ -33,9 +34,9 @@ router.get('/signup/lecturer', getApprovedInstitutions, (req, res) => {
 });
 
 router.get('/signup/institution', (req, res) => {
-    res.render('auth/signup-institution', { 
+    res.render('auth/signup-institution', {
         title: 'eBooklog - Institution Signup',
-        user: req.user 
+        user: req.user
     });
 });
 

@@ -1,15 +1,16 @@
 const passport = require('passport');
 const { User, Student, Lecturer, Institution, ITF } = require('../models/user');
+const upload = require('../multer');
 
 // Create passport local strategy
 passport.use(User.createStrategy());
 
 // Serialize and deserialize user
-passport.serializeUser(function(user, done) {
+passport.serializeUser(function (user, done) {
     done(null, user.id);
 });
 
-passport.deserializeUser(async function(id, done) {
+passport.deserializeUser(async function (id, done) {
     try {
         const user = await User.findById(id);
         done(null, user);
@@ -22,10 +23,10 @@ passport.deserializeUser(async function(id, done) {
 const register = async (req, res) => {
     try {
         const { email, password, role, ...additionalDetails } = req.body;
-        
+
         // Create user based on role
         let newUser;
-        switch(role) {
+        switch (role) {
             case 'student':
                 newUser = new Student({
                     email,
@@ -80,7 +81,7 @@ const register = async (req, res) => {
         };
         res.redirect('/auth/signup/select-role');
     }
-}
+};
 
 const loginUser = (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
@@ -129,27 +130,27 @@ const logout = (req, res) => {
         };
         res.redirect('/auth/signin');
     });
-}
+};
 
 const signOut = (req, res) => {
     res.render('auth/signout', {
         title: 'eBooklog - Sign Out Confirmation',
         user: req.user
     });
-}
+};
 
 const signin = (req, res) => {
     res.render('auth/signin', {
         title: 'eBooklog - Sign In',
         user: req.user
     });
-}
+};
 
 const signup = (req, res) => {
     res.render('auth/select-role', {
         title: 'eBooklog - Sign Up',
         user: req.user
     });
-}
+};
 
 module.exports = { signin, signup, loginUser, register, logout, signOut };
